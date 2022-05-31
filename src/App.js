@@ -1,42 +1,32 @@
 import React from 'react';
 import './App.css';
+import { useState } from 'react';
 
 import Header from './components/Header'
 import ToyForm from './components/ToyForm'
 import ToyContainer from './components/ToyContainer'
 
 
-class App extends React.Component{
+function App() {
+  const [display, setDisplay] = useState(false);
 
-  state = {
-    display: false
-  }
-
-  handleClick = () => {
-    let newBoolean = !this.state.display
-    this.setState({
+  const handleClick = () => {
+    let newBoolean = !display
+    setDisplay({
       display: newBoolean
     })
   }
 
-  render(){
-    return (
-      <>
+  return (
+    <>
         <Header/>
-        { this.state.display
-            ?
-          <ToyForm/>
-            :
-          null
-        }
+        { display ? <ToyForm/> : null }
         <div className="buttonContainer">
-          <button onClick={this.handleClick}> Add a Toy </button>
+          <button onClick={handleClick}> Add a Toy </button>
         </div>
         <ToyContainer/>
       </>
-    );
-  }
-
+  )
 }
 
-export default App;
+export default App

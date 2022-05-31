@@ -1,19 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { fetchToys, handleDelete, handleLikes } from '../APIs/toys';
 
-class ToyCard extends Component {
+function ToyCard() {
 
-  render() {
-    return (
-      <div className="card">
-        <h2>{'' /* Toy's Name */}</h2>
-        <img src={'' /* Toy's Image */} alt={'' /* Toy's Name */} className="toy-avatar" />
-        <p>{'' /* Toy's Likes */} Likes </p>
-        <button className="like-btn">Like {'<3'}</button>
-        <button className="del-btn">Donate to GoodWill</button>
-      </div>
-    );
-  }
+const [toys, setToys] = useState([])
 
+  useEffect(() => {
+    fetchToys()
+    .then(toys => setToys(toys))
+  }, [toys])
+
+  return (
+    toys.map((toy, index) => (
+      <div className="card" key={index}>
+      <h2>{toy.name /* Toy's Name */}</h2>
+      <img src={toy.image /* Toy's Image */} alt={toy.name /* Toy's Name */} className="toy-avatar" />
+      <p>{toy.likes /* Toy's Likes */} Likes </p>
+      <button className="like-btn" onClick={()=> handleLikes(toy)}>Like {'<3'}</button>
+      <button className="del-btn" onClick={() => handleDelete(toy)}>Donate to GoodWill</button>
+    </div>
+    ))
+  )
 }
 
-export default ToyCard;
+export default ToyCard
